@@ -6,10 +6,7 @@ export default class MapContainer extends Component {
     super(props);
     this.state = {
       myMap: null,
-      popup: L.popup(),
-      initialPosition: [51.505, -0.09],
-      initialZoom: 13,
-      maxZoom: 18
+      popup: L.popup()
     };
     this.openDefaultPopup = this.openDefaultPopup.bind(this);
   }
@@ -30,16 +27,13 @@ export default class MapContainer extends Component {
 
   async componentDidMount() {
     // ! accessToken needs to be pulled in a different way prior to deploy
-    const myMap = await L.map("my-map").setView(
-      this.state.initialPosition,
-      this.state.initialZoom
-    );
+    const myMap = await L.map("my-map").setView([51.505, -0.09], 13);
     L.tileLayer(
       "https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}",
       {
         attribution:
           'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: this.state.maxZoom,
+        maxZoom: 18,
         id: "mapbox.streets",
         accessToken: process.env.MAPBOX_ACCESS_TOKEN
       }
